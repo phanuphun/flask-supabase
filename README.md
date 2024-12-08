@@ -1,21 +1,12 @@
-# My Flask Notes 
+# Flask Sample Web API with Supabase
 
-## Flask Setup Project
-1. Create virtual environment in python with `python -m venv env`
-2. access to env with `env/Scripts/activate`
-3. install Flask `pip install flask`
-4. set our .py python to flask know where to run file with `set FLASK_APP=<filename>`
-
-## How to run 
-1. access to enn first
-2. Run `flask run` for run http://127.0.0.1:5000 , this is a default of Flask.
-   - you can defind specific host or port like this `flask run --host=<ip> --port=<portNumber>`
-   - you can use `--debug` for debug mode when your code changed
-3. If you are aready setup app instant of flask in your file, you can run `pythom <filename>` insteard.
-
-## Basic Command
-1. Create requirements.txt with `pip freeze > requirement.txt`
-2. install dependencies following requirements.txt with `pip install`
-
-## VSCode Extention 
-- [flask-snippets](https://marketplace.visualstudio.com/items?itemName=cstrap.flask-snippets)
+## Setup and Installation 
+- Create `.env` file ypur root directory , Then set environment variables 
+```shell
+SUPABASE_URL = '---YOUR_SUPABASE_URL---'
+SUPABASE_KEY = '---YOUR_SUPABASE_API_KEY---'
+```
+- Run `python -m venv env` to create a virtual environment
+- Run `env/Scripts/activate` for activate to virtual environment 
+- Run `pip install -r requirements.txt` for install dependencies following requirements.txt
+- Run `python main.py` to start api on `http://localhost:5000`

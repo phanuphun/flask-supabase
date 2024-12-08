@@ -1,40 +1,30 @@
 from flask import Flask , request
+from supabase import create_client, Client
+from dotenv import load_dotenv
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+load_dotenv()
+
+# supabase connect
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+# Check database connection
+try:
+    response = supabase.table('books').select('*').execute()
+    print("Supabase Connected !!!")
+except Exception as e:
+    print("Error connecting to Supabase:")
+    print(e)
+
+# App registration
+from app.routes.site_config_routes import site_route
 app = Flask(__name__)
+app.register_blueprint(site_route)
 
-books = [{'title':'book1','prince':299,'id':1}]
 
-# GET
-@app.route('/')
-def hello_world():
-    q = request.args.get('q')
-    print(q)
-    return {'msg':'Hello World' , 'params':q} , 200
-
-# POST
-@app.route('/book' , methods=['POST','GET','PUT','DELETE'])
-def book():
-    if request.method == 'POST':
-        # body = request.data 
-        body = request.get_json()
-        books.append(body)
-        return {'msg':'add book success','data':books} , 201 
-    elif request.method == 'GET':
-        return {'data': books}, 200
-    elif request.method == 'PUT':
-        body = request.get_json()
-        print(body)
-        for i, book in enumerate(books):
-            if book['id'] == body['id']:
-                books[i] = body 
-        return {'msg':'update success' , 'data' : books} , 200 
-    elif request.method == 'DELETE': 
-        deleteId = request.args.get('id')
-        for i , book in enumerate(books):
-            if book['id'] == int(deleteId):
-                print('deleted')
-                books.pop(i)
-        return {'msg':'delete success' , 'data' : books} , 200 
-    
-    
 if __name__ == '__main__' :
     app.run(debug=True)
