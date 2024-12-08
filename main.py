@@ -21,7 +21,7 @@ except Exception as e:
     print(e)
 
 # App registration
-from app.routes.site_config_routes import site_route
+from app.routes.books_routes import site_route
 app = Flask(__name__)
 app.register_blueprint(site_route)
 
