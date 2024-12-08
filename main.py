@@ -5,26 +5,12 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-load_dotenv()
-
-# supabase connect
-SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_KEY = os.getenv("SUPABASE_KEY")
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
-
-# Check database connection
-try:
-    response = supabase.table('books').select('*').execute()
-    print("Supabase Connected !!!")
-except Exception as e:
-    print("Error connecting to Supabase:")
-    print(e)
-
 # App registration
-from app.routes.books_routes import site_route
+from app.router.books_route import books_route
+from app.router.categories_route import categories_route
 app = Flask(__name__)
-app.register_blueprint(site_route)
-
+app.register_blueprint(books_route)
+app.register_blueprint(categories_route)
 
 if __name__ == '__main__' :
     app.run(debug=True)
