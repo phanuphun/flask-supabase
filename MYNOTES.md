@@ -1,4 +1,6 @@
 # My Flask Notes 
+- [Python Query Syntax](https://supabase.com/docs/reference/python/insert)
+
 
 ## Flask Setup Project
 1. Create virtual environment in python with `python -m venv env`
