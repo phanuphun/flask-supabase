@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify , request
-from app.utils.supabase_client import supabase
+from app.config.supabase_client import supabase
 
 categories_route = Blueprint('categories', __name__)
 
@@ -15,8 +15,8 @@ def get_categories():
         return {'msg':'get data successful!' , 'data':res.data}, 200
     
     except Exception as e:
-        print('Error : ',e)
-        return jsonify('Error : ',e), 500
+        print('Error : ',str(e))
+        return jsonify('Error : ',str(e)), 500
     
 # create
 @categories_route.route('/categories',methods=['POST'])
@@ -31,8 +31,8 @@ def add_category():
                .execute())
         return {'msg':'add new category successful!','data':res.data}, 201
     except Exception as e :
-        print('Error : ',e)
-        return jsonify('Error : ',e), 500
+        print('Error : ',str(e))
+        return jsonify('Error : ',str(e)), 500
     
 # update
 @categories_route.route('/categories',methods=['PUT'])
@@ -49,8 +49,8 @@ def update_category():
                .execute())
         return {'msg':'update category successful!','data':res.data}, 201
     except Exception as e :
-        print('Error : ',e)
-        return jsonify('Error : ',e), 500
+        print('Error : ',str(e))
+        return jsonify('Error : ',str(e)), 500
     
 # delete
 @categories_route.route('/categories',methods=['DELETE'])
@@ -66,5 +66,19 @@ def delete_category():
                .execute())
         return {'msg':'delete category successful!','data':res.data}, 201
     except Exception as e :
-        print('Error : ',e)
-        return jsonify('Error : ',e), 500
+        print('Error : ',str(e))
+        return jsonify('Error : ',str(e)), 500
+
+# get books in categories (inner join)
+@categories_route.route('/categories/summary', methods=['GET'])
+def get_summary():
+    try:
+        res = (supabase
+               .table('categories')
+               .select('*,books(*)')
+               .execute())
+        
+        return jsonify({'msg':'get all books in category' , 'data':res.data})
+    except Exception as e :
+        print('Error : ',str(e))
+        return jsonify('Error : ',str(e)), 500
