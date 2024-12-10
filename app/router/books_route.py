@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify , request
 from app.config.supabase_client import supabase
 import datetime
 
-books_route = Blueprint('main', __name__)
+books_route = Blueprint('books', __name__)
 
 # get
 @books_route.route('/books', methods=['GET'])
